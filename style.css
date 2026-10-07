@@ -1,0 +1,10 @@
+:root {
+    --btn-active: rgb(0, 68, 255);
+    --btn-border-blue: 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
