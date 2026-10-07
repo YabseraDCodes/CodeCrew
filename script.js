@@ -1,13 +1,17 @@
-   const projectContainer = document.getElementById('project-container')
-   const Allbtn = document.getElementById('All')
-   const javabtn = document.getElementById('java')
-   const htmlbtn = document.getElementById('html')
-   const otherbtn = document.getElementById('other')
-   const state = {
+const projectContainer = document.getElementById('project-container')
+const Allbtn = document.getElementById('All')
+const javabtn = document.getElementById('java')
+const htmlbtn = document.getElementById('html')
+const otherbtn = document.getElementById('other')
+const modal = document.querySelector("#projectModal");
+const modalName = document.getElementById("modalName");
+const modalCategory = document.getElementById("modalCategory");
+const modalDescription = document.getElementById("modalDescription");
+
+const state = {
     projects: [],
 
-  }
-
+}
 
 async function fetchData() {
     try {
@@ -15,20 +19,20 @@ async function fetchData() {
 
         const data = await response.json();
         state.projects = data;
-renderProjects(state.projects);
-       
-}catch (error) {
-} console.log(state.projects)
-renderProjects(state.projects);
+        renderProjects(state.projects);
+
+    } catch (error) {
+    } console.log(state.projects)
+    renderProjects(state.projects);
     setupFilterButtons();
 }
 fetchData();
 
 
 
-    function renderProjects(projectsToRender) {
+function renderProjects(projectsToRender) {
     projectContainer.innerHTML = "";
-    
+
     if (projectsToRender.length === 0) {
         projectContainer.innerHTML = "<p>No projects found in this category.</p>";
         return;
@@ -44,7 +48,7 @@ function displayProjects(project) {
     const title = project.title;
     const category = project.category;
     const name = project.name;
-    
+
 
     projectContainer.innerHTML += `
         <article class="card">
@@ -52,12 +56,12 @@ function displayProjects(project) {
                 <h2>Project ${no}: ${name}</h2>
                 <p>${title}</p>
                 <p>${category}</p>
-                <button>View Detail</button>
+                <button onclick="openModal(${project.id})">View Detail</button>
             </div>
         </article>
     `;
 }
-  function setupFilterButtons() {
+function setupFilterButtons() {
     const filterButtons = [Allbtn, javabtn, htmlbtn, otherbtn];
 
     filterButtons.forEach(button => {
@@ -65,10 +69,10 @@ function displayProjects(project) {
 
         button.addEventListener('click', (e) => {
             const selectedCategory = e.target.getAttribute("data");
-            
+
             if (!selectedCategory || selectedCategory === "all") {
                 renderProjects(state.projects);
-            } else if(selectedCategory === "all"){renderProjects(state.projects)}
+            } else if (selectedCategory === "all") { renderProjects(state.projects) }
             else {
                 const filteredProjects = state.projects.filter(
                     project => project.category.toLowerCase() === selectedCategory.toLowerCase()
@@ -79,6 +83,28 @@ function displayProjects(project) {
     });
 }
 
+
+function openModal(projectId) {
+
+    const project = state.projects.find(
+        project => project.id === projectId
+    );
+
+    modal.style.display = 'flex';
+    if (!project) {
+        return;
+    };
+
+    modalName.textContent = project.name;
+    modalCategory.textContent = project.category;
+    modalDescription.textContent = project.body;
+
+}
+
+
+function closeModal() {
+    modal.style.display = 'none';
+}
 
 const menuToggle = document.getElementById("menuToggle");
 const navbar = document.getElementById("navbar");
