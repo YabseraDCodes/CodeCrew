@@ -1,10 +1,83 @@
 :root {
     --btn-active: rgb(0, 68, 255);
-    --btn-border-blue: 
+    --btn-border-blue: rgb(0, 68, 255);
+    --text-white: rgb(224, 224, 224);
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+body{
+    font-family: "Segoe UI" ;
+}
+
+header {
+    background-color: rgb(2, 2, 24);
+    color: white;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+    /* font-size: 15px; */
+}
+
+nav a {
+    color: var(--text-white);
+}
+
+a {
+    text-decoration: none;
+}
+
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+
+    header {
+        position: relative;
+        align-items: center;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .navbar {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: rgb(2, 2, 24);
+        flex-direction: column;
+        gap: 0;
+        padding: 10px 20px;
+    }
+
+    .navbar.active {
+        display: flex;
+    }
+
+    .navbar a {
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .navbar a:last-child {
+        border-bottom: none;
+    }
 }
