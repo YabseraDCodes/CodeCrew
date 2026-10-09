@@ -16,12 +16,13 @@
 body {
     font-family: "Segoe UI", sans-serif;
     color: var(--text);
+    background: #f4f7fb;
+    line-height: 1.6;
 }
 
 button,
 input,
 textarea {
-    /* font-family: "Segoe UI"; */
     font-family: inherit;
 }
 
@@ -29,32 +30,59 @@ a {
     text-decoration: none;
 }
 
-
-
 header {
-    background-color: var(--dark);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(9, 15, 35, 0.8);
+    backdrop-filter: blur(12px);
     color: white;
-    padding: 20px 50px;
+    padding: 18px 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 header h3 {
     font-size: 22px;
+    letter-spacing: 0.04em;
 }
 
 nav {
     display: flex;
     gap: 30px;
+    align-items: center;
 }
 
 nav a {
+    position: relative;
     color: var(--white-text);
+    font-weight: 500;
+    transition: color 0.2s ease;
 }
 
-nav a:hover {
-    color: #4b77f0;
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 100%;
+    height: 2px;
+    background: var(--blue);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.25s ease;
+}
+
+nav a:hover,
+nav a:focus-visible {
+    color: #dfe9ff;
+}
+
+nav a:hover::after,
+nav a:focus-visible::after {
+    transform: scaleX(1);
 }
 
 .menu-toggle {
@@ -66,83 +94,201 @@ nav a:hover {
     cursor: pointer;
 }
 
-
-
 .hero {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 40px;
-    padding: 30px 50px;
-    background-image:
-        linear-gradient(rgba(235, 244, 253, 0.75), rgba(235, 244, 253, 0.75)),
-        url("assets/gradient-wallpaper.jpg");
-    background-size: cover;
-    background-position: center;
+    gap: 50px;
+    padding: 70px 50px 80px;
+    background:
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.18), transparent 30%),
+        linear-gradient(135deg, #eef6ff 0%, #e5edff 35%, #f4f8ff 100%);
+    overflow: hidden;
+}
+
+.hero::before,
+.hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(64, 102, 255, 0.08);
+}
+
+.hero::before {
+    width: 420px;
+    height: 420px;
+    right: -90px;
+    top: -100px;
+}
+
+.hero::after {
+    width: 300px;
+    height: 300px;
+    left: -80px;
+    bottom: -120px;
 }
 
 .hero > div {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-copy {
     flex: 1;
     max-width: 650px;
 }
 
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(0, 68, 255, 0.15);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.6);
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
 .hero h1 {
-    font-size: 48px;
-    line-height: 1.2;
-    margin-bottom: 15px;
+    font-size: clamp(2.5rem, 6vw, 4.3rem);
+    line-height: 1.05;
+    margin-bottom: 18px;
+    color: #0f172a;
+}
+
+.hero h1 span {
+    color: var(--blue);
 }
 
 .hero h3 {
-    color: var(--blue);
-    margin-bottom: 20px;
+    color: #1d4ed8;
+    margin-bottom: 18px;
+    font-size: clamp(1.3rem, 2vw, 2rem);
 }
 
 .hero p {
-    margin-bottom: 15px;
+    margin-bottom: 28px;
+    max-width: 540px;
+    color: #475569;
+    font-size: 1.05rem;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 30px;
+}
+
+.hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.hero-stats div {
+    display: flex;
+    flex-direction: column;
+    min-width: 90px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+.hero-stats strong {
+    font-size: 1.4rem;
+    color: #0f172a;
+}
+
+.hero-stats span {
+    color: #64748b;
+    font-size: 0.8rem;
+}
+
+.hero-visual {
+    flex: 0 0 380px;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-card {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 32% 68% 58% 42% / 42% 35% 65% 58%;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(59, 130, 246, 0.4));
+    box-shadow: 0 24px 60px rgba(37, 99, 235, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.profile-card::before {
+    content: "";
+    position: absolute;
+    inset: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 28% 72% 60% 40% / 45% 30% 70% 55%;
 }
 
 .hero img {
-    width: 350px;
-    height: 350px;
+    width: 260px;
+    height: 260px;
     object-fit: cover;
     border-radius: 50%;
+    position: relative;
+    z-index: 1;
+    border: 6px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 18px 30px rgba(15, 23, 42, 0.12);
 }
 
 .view-project-btn,
 .contact-me-btn {
-    padding: 13px 30px;
-    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 28px;
+    border-radius: 12px;
     font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.25s ease;
 }
 
 .view-project-btn {
     color: white;
-    margin-right: 10px;
-    background-color: var(--blue);
-    border: 1px solid var(--blue);
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.25);
 }
 
 .contact-me-btn {
     color: var(--blue);
-    background-color: transparent;
-    border: 1px solid var(--blue);
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(37, 99, 235, 0.18);
 }
 
 .view-project-btn:hover,
 .contact-me-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 18px rgba(0, 68, 255, 0.2);
+    box-shadow: 0 16px 28px rgba(0, 68, 255, 0.18);
 }
 
 .view-project-btn:hover {
-    background-color: #0036cc;
+    background: linear-gradient(135deg, #1d4ed8, #1e3a8a);
 }
 
 .contact-me-btn:hover {
     color: white;
-    background-color: var(--blue);
+    background: var(--blue);
 }
 
 
@@ -482,6 +628,10 @@ nav a:hover {
         gap: 0;
     }
 
+    .navbar.active {
+        display: flex;
+    }
+
     .navbar a {
         padding: 15px 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -492,10 +642,26 @@ nav a:hover {
     }
 
     .hero {
-        padding: 40px 30px;
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 30px 60px;
     }
 
-    .hero img {
+    .hero-copy,
+    .hero-visual {
+        width: 100%;
+    }
+
+    .hero-copy {
+        max-width: 100%;
+    }
+
+    .hero-actions,
+    .hero-stats {
+        justify-content: center;
+    }
+
+    .hero-visual {
         display: none;
     }
 

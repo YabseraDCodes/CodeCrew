@@ -16,26 +16,47 @@
             ☰
         </button>
         <nav class="navbar" id="navbar">
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Skills</a>
-            <a href="#">Projects</a>
-            <a href="#">Contact</a>
+            <a href="#hero">Home</a>
+            <a href="#about">About</a>
+            <a href="#skill">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
         </nav>
     </header>
-    <section class="hero">
-        <div>
-            <h1>Hello, I'm Alex Morgan</h1>
+    <section id="hero" class="hero">
+        <div class="hero-copy">
+            <span class="hero-badge">Available for freelance work</span>
+            <h1>Hello, I'm <span>Alex Morgan</span></h1>
             <h3>Frontend Developer</h3>
-            <p>I build modern and responsive web experiences.</p>
-            <button class="view-project-btn">View Projects</button>
-            <button class="contact-me-btn">Contact Me</button>
+            <p>I design and build modern, responsive web experiences that feel premium and perform beautifully.</p>
+            <div class="hero-actions">
+                <a href="#projects" class="view-project-btn">View Projects</a>
+                <a href="#contact" class="contact-me-btn">Contact Me</a>
+            </div>
+            <div class="hero-stats">
+                <div>
+                    <strong>2+</strong>
+                    <span>Years</span>
+                </div>
+                <div>
+                    <strong>15+</strong>
+                    <span>Projects</span>
+                </div>
+                <div>
+                    <strong>100%</strong>
+                    <span>Focus</span>
+                </div>
+            </div>
         </div>
-        <img src="assets/picture2.png" alt="My-picture" />
+        <div class="hero-visual">
+            <div class="profile-card">
+                <img src="assets/picture2.png" alt="My-picture" />
+            </div>
+        </div>
     </section>
 
 
-    <section class="about-section">
+    <section id="about" class="about-section">
         <h2>ABOUT ME</h2>
 
         <p class="about-intro">
@@ -90,7 +111,7 @@
     </section>
 
 
-    <section class="skills-section">
+    <section id="skill" class="skills-section">
         <h2>MY SKILLS</h2>
         <div class="skill-list">
             <article class="skill-card">
