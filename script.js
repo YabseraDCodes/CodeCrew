@@ -7,28 +7,33 @@ const modal = document.querySelector("#projectModal");
 const modalName = document.getElementById("modalName");
 const modalCategory = document.getElementById("modalCategory");
 const modalDescription = document.getElementById("modalDescription");
+const form = document.getElementById('contactForm');
+const formMessage = document.getElementById('formMessage');
 
 const state = {
     projects: [],
-
 }
 
 async function fetchData() {
     try {
         const response = await fetch('./data/project.json');
 
+        if (!response.ok) {
+            throw new Error('Failed to fetch projects');
+        }
+
         const data = await response.json();
         state.projects = data;
         renderProjects(state.projects);
-
     } catch (error) {
-    } console.log(state.projects)
-    renderProjects(state.projects);
+        console.error(error);
+        projectContainer.innerHTML = '<p>No projects available right now.</p>';
+    }
+
     setupFilterButtons();
 }
+
 fetchData();
-
-
 
 function renderProjects(projectsToRender) {
     projectContainer.innerHTML = "";
@@ -49,7 +54,6 @@ function displayProjects(project) {
     const category = project.category;
     const name = project.name;
 
-
     projectContainer.innerHTML += `
         <article class="card">
             <div class="card-content">
@@ -61,46 +65,45 @@ function displayProjects(project) {
         </article>
     `;
 }
+
 function setupFilterButtons() {
     const filterButtons = [Allbtn, javabtn, htmlbtn, otherbtn];
 
-    filterButtons.forEach(button => {
+    filterButtons.forEach((button) => {
         if (!button) return;
 
         button.addEventListener('click', (e) => {
             const selectedCategory = e.target.getAttribute("data");
+            const normalized = selectedCategory === 'all' ? 'all' : selectedCategory.toLowerCase();
 
-            if (!selectedCategory || selectedCategory === "all") {
+            filterButtons.forEach((btn) => btn.classList.toggle('active', btn === e.target));
+
+            if (!selectedCategory || normalized === 'all') {
                 renderProjects(state.projects);
-            } else if (selectedCategory === "all") { renderProjects(state.projects) }
-            else {
-                const filteredProjects = state.projects.filter(
-                    project => project.category.toLowerCase() === selectedCategory.toLowerCase()
-                );
-                renderProjects(filteredProjects);
+                return;
             }
+
+            const filteredProjects = state.projects.filter(
+                project => project.category.toLowerCase() === normalized.toLowerCase()
+            );
+            renderProjects(filteredProjects);
         });
     });
 }
 
-
 function openModal(projectId) {
-
-    const project = state.projects.find(
-        project => project.id === projectId
-    );
+    const project = state.projects.find(project => project.id === projectId);
 
     modal.style.display = 'flex';
+
     if (!project) {
         return;
-    };
+    }
 
     modalName.textContent = project.name;
     modalCategory.textContent = project.category;
     modalDescription.textContent = project.body;
-
 }
-
 
 function closeModal() {
     modal.style.display = 'none';
@@ -109,6 +112,16 @@ function closeModal() {
 const menuToggle = document.getElementById("menuToggle");
 const navbar = document.getElementById("navbar");
 
-menuToggle.addEventListener("click", () => {
-    navbar.classList.toggle("active");
-});
+if (menuToggle && navbar) {
+    menuToggle.addEventListener("click", () => {
+        navbar.classList.toggle("active");
+    });
+}
+
+if (form) {
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        formMessage.textContent = 'Thanks! Your message has been sent.';
+        form.reset();
+    });
+}
